@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          release_id="$(gh list release --json --jq '.[] | select(.draft == true) | .id')"
+          release_id="$(gh release list --json --jq '.[] | select(.draft == true) | .id')"
           echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
