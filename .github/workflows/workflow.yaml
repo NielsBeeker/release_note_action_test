@@ -9,15 +9,11 @@ jobs:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
     steps:
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-            route: GET /repos/NielsBeeker/release_note_action_test/releases
+      - run: |
+          release_id="$(gh list release --json --jq '.[] | select(.draft == true) | .id')"
+          echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            INPUT_REPOSITORY: ${{ github.repository }}
-            INPUT_BASE: ${{ github.base_ref }}
-            INPUT_HEAD: ${{ github.ref }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract version from package.json
         uses: sergeysova/jq-action@v2
         id: version
@@ -28,7 +24,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            id: ${{ steps.keywords.outputs.value }}
+            id: $RELEASE_ID
 
   release_frontend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
