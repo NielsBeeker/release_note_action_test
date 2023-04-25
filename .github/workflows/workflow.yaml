@@ -10,15 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          release_id="$(gh release list --jq '.[] | select(.draft == true) | .id')"
+          release_id="$(gh release list --json id,draft --jq '.[] | select(.draft == true) | .id')"
           echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract version from package.json
-        uses: sergeysova/jq-action@v2
-        id: version
-        with:
-          cmd: "'${{ steps.get_latest_release.outputs.data }}' | jq '.[] | select(.draft == true) | .id'"
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
