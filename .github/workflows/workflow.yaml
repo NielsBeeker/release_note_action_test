@@ -13,10 +13,11 @@ jobs:
         id: get_latest_release
         with:
             route: GET /repos/NielsBeeker/release_note_action_test/releases?draft=true
-            owner: octokit
-            repo: request-action
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            INPUT_REPOSITORY: ${{ github.repository }}
+            INPUT_BASE: ${{ github.base_ref }}
+            INPUT_HEAD: ${{ github.ref }}
       - run: "echo latest release: '${{ steps.get_latest_release.outputs.data }}'"
 
   release_frontend_note:
