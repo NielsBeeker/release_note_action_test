@@ -13,10 +13,10 @@ jobs:
         id: get_git_release
         uses: cardinalby/git-get-release-action@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          #releaseNameRegEx: /backend_v[0-9]+\.[0-9]+\.[0-9].*/
+          releaseNameRegEx: /backend_v[0-9]+\.[0-9]+\.[0-9].*/
 
   release_frontend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
@@ -26,7 +26,7 @@ jobs:
         id: get_git_release
         uses: cardinalby/git-get-release-action@v1
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           draft: true
-          #releaseNameRegEx: /frontend_v[0-9]+\.[0-9]+\.[0-9]+.*/
+          releaseNameRegEx: /frontend_v[0-9]+\.[0-9]+\.[0-9]+.*/
