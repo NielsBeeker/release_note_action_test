@@ -8,7 +8,6 @@ jobs:
   release_backend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
-    container: ubuntu:20.04
     steps:
       - name: Checkout Repo Action
         uses: actions/checkout@v2
