@@ -10,16 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          release_id="$(gh release list --json id,draft --jq '.[] | select(.draft == true) | .id')"
+          release_id="$(gh release list)"
           echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: "$RELEASE_ID | jq '.[] | select(.draft == true) | .id'"
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            id: $RELEASE_ID
+            id: ${{ steps.keywords.outputs.value }}
 
   release_frontend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
