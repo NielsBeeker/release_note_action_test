@@ -12,13 +12,23 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
-            route: GET /repos/NielsBeeker/release_note_action_test/releases?draft=true
+            route: GET /repos/NielsBeeker/release_note_action_test/releases
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             INPUT_REPOSITORY: ${{ github.repository }}
             INPUT_BASE: ${{ github.base_ref }}
             INPUT_HEAD: ${{ github.ref }}
-      - run: "echo latest release: '${{ steps.get_latest_release.outputs.data }}'"
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        id: version
+        with:
+          cmd: "'${{ steps.get_latest_release.outputs.data }}' | jq '.[] | select(.draft == true) | .id'"
+      - name: Publish release
+        uses: StuYarrow/publish-release@v1.1.2
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            id: ${{ steps.keywords.outputs.value }}
 
   release_frontend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
