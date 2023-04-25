@@ -8,7 +8,10 @@ jobs:
   release_backend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
+    container: ubuntu:20.04
     steps:
+      - name: Checkout Repo Action
+        uses: actions/checkout@v2
       - run: |
           release_id="$(gh release list)"
           echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
@@ -16,7 +19,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract version from package.json
         uses: sergeysova/jq-action@v2
-        id: version
+        id: get_release_note_id
         with:
           cmd: "$RELEASE_ID | jq '.[] | select(.draft == true) | .id'"
       - name: Publish release
