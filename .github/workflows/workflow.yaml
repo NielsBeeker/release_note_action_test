@@ -12,7 +12,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
-            route: GET /repos/NielsBeeker/release_note_action_test/releases?state=draft
+            route: GET /repos/NielsBeeker/release_note_action_test/releases?draft=true
             owner: octokit
             repo: request-action
         env:
