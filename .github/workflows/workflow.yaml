@@ -12,6 +12,7 @@ jobs:
       - name: Checkout Repo Action
         uses: actions/checkout@v2
       - run: |
+          gh --version
           release_id="$(gh release list)"
           echo 'RELEASE_ID='$release_id >> $GITHUB_ENV
         env:
