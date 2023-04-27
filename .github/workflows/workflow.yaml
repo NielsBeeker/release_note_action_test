@@ -18,14 +18,12 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
       - name: Extract release note id from GitHub RestApi
-        uses: sergeysova/jq-action@v2
         id: get_release_note_id
         env:
           release_notes: ${{ steps.get_latest_draft_release.outputs.data }}
-        with:
-          cmd: $release_notes | jq '.[] | select(.draft == true ) | .id'
-          #cmd: "'${{ steps.get_latest_draft_release.outputs.data }}' | jq '.[] '"#| select(.draft == true) | .id'"
-      - run: "echo release found '${{ steps.get_release_note_id.outputs }}'"
+        run: |
+            echo $($release_notes | jq '.[] | select(.draft == true ) | .id')
+
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
