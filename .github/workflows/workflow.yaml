@@ -11,20 +11,23 @@ jobs:
     steps:
       - name: Checkout Repo Action
         uses: actions/checkout@v2
-      - name: 'git get release'
-        id: get_draft_release_note_id
-        uses: cardinalby/git-get-release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+      - uses: octokit/request-action@v2.x
+        id: get_latest_draft_release
         with:
-          draft: true
-          #releaseNameRegEx: /backend_v[0-9]+\.[0-9]+\.[0-9]+.*/
+            route: GET /repos/NielsBeeker/release_note_action_test/releases
+        env:
+            GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
+      - name: Extract version from package.json
+        uses: sergeysova/jq-action@v2
+        id: get_release_note_id
+        with:
+          cmd: "'${{ steps.get_latest_draft_release.outputs.data }}' | jq '.[] | select(.draft == true) | .id'"
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            id: ${{ steps.get_draft_release_note_id.outputs.id }}
+            id: ${{ steps.get_release_note_id.outputs.value }}
 
   release_frontend_note:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
