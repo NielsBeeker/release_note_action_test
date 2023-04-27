@@ -22,7 +22,7 @@ jobs:
         env:
           release_notes: ${{ steps.get_latest_draft_release.outputs.data }}
         run: |
-          echo "release_note_id=$(echo $release_notes | jq '.[] | select((.tag_name | startswith("backend_v")) and (.draft==true)).id') >> $GITHUB_OUTPUT
+          echo "release_note_id=$(echo $release_notes | jq '.[] | select((.tag_name | startswith("backend_v")) and (.draft==true)).id')" >> $GITHUB_OUTPUT
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
