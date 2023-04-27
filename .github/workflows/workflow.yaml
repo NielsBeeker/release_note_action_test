@@ -21,7 +21,7 @@ jobs:
         uses: sergeysova/jq-action@v2
         id: get_release_note_id
         with:
-          cmd: "'${{ steps.get_latest_draft_release.outputs.data }}' | jq '.[] | select(.draft == true) | .id'"
+          cmd: "${{ steps.get_latest_draft_release.outputs.data }} | jq '.[] | select(.draft == true) | .id'"
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
         env:
