@@ -22,7 +22,7 @@ jobs:
         env:
           release_notes: ${{ steps.get_latest_draft_release.outputs.data }}
         run: |
-          echo "release note:" $(echo $release_notes | select(.draft == true) | .id')
+          echo "release note:" $(echo $release_notes | jq '.[] | select(.draft == true) | .id')
 
       - name: Publish release
         uses: StuYarrow/publish-release@v1.1.2
