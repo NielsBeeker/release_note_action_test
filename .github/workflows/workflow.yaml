@@ -21,7 +21,7 @@ jobs:
         uses: sergeysova/jq-action@v2
         id: get_release_note_id
         with:
-          cmd: "echo ${{ steps.get_latest_draft_release.outputs }} | jq"
+          cmd: "echo ${{ steps.get_latest_draft_release.outputs.data }} | jq"
           #cmd: "'${{ steps.get_latest_draft_release.outputs.data }}' | jq '.[] '"#| select(.draft == true) | .id'"
       - run: "echo release found '${{ steps.get_release_note_id.outputs }}'"
       - name: Publish release
