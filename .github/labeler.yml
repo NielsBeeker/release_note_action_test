@@ -1,36 +1,11 @@
-name-template: 'frontend_v$RESOLVED_VERSION 🌈'
-tag-template: 'frontend_v$RESOLVED_VERSION'
+frontend:
+  - 'front/front.md'
+backend:
+  - 'back/back.md'
 
-filter-by-commitish: true
-commitish: frontend-release
+common-library:
+  - 'common/common.md'
 
-categories:
-  - title: Frontend New Features 🚀
-    label: 'frontend'
-  - title: Common library changes 🎊
-    labels:
-      - 'common-library'
-      - 'doc'
-
-version-resolver:
-  major:
-    labels:
-      - 'front-breaking-changes'
-  minor:
-    labels:
-      - 'front-minor-changes'
-  default: patch
-
-include-labels:
-  - 'frontend'
-  - 'common-library'
-
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
-
-change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
-
-header: |
-  ## What's Changed
-
-template: |
-  $CHANGES
+# Add 'ci' label to any change to '.circleci'
+ci:
+  - 'ci/ci.md'
