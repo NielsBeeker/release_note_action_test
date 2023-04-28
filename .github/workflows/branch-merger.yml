@@ -1,0 +1,60 @@
+name: Merge main back to frontend-release and backend-release branches
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+jobs:
+  merge-branches:
+    if: github.event.pull_request.merged == true
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set Git config
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          git fetch --unshallow
+      - name: Merge main to backend-release
+        run: |
+          git checkout -b origin/backend-release
+          git pull origin backend-release
+          git merge --no-ff origin/main -m "Auto-merge main back to backend-release"
+      - name: Push changes to backend-release
+        uses: ad-m/github-push-action@master
+        with:
+          branch: backend-release
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge main to frontend-release
+        run: |
+          git checkout -b origin/frontend-release
+          git pull origin frontend-release
+          git merge --no-ff origin/main -m "Auto-merge main back to frontend-release"
+      - name: Push changes to frontend-release
+        uses: ad-m/github-push-action@master
+        with:
+          branch: frontend-release
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  update-frontend-release-draft:
+    needs: merge-branches
+    runs-on: ubuntu-latest
+    steps:
+      # Drafts your next Release notes as Pull Requests are merged into "backend-release"
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter-frontend-release.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-backend-release-draft:
+    needs: merge-branches
+    runs-on: ubuntu-latest
+    steps:
+      # Drafts your next Release notes as Pull Requests are merged into "frontend-release"
+      - uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release-drafter-backend-release.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
