@@ -6,7 +6,7 @@ on:
 
 jobs:
   release_backend_with_frontend:
-    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v') && ${{ github.actor }} !== 'github-actions[bot]'
+    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v') &&
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
@@ -32,7 +32,7 @@ jobs:
             id: ${{ steps.get_release_note_id.outputs.release_note_id }}
 
   release_frontend_with_backend:
-    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v') && ${{ github.actor }} !== 'github-actions[bot]'
+    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
