@@ -6,9 +6,10 @@ on:
 
 jobs:
   release_backend_with_frontend:
-    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
+    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v') && ${{ github.actor }} !== 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ github.actor }}
       - name: Checkout Repo Action
         uses: actions/checkout@v2
       - uses: octokit/request-action@v2.x
@@ -31,9 +32,10 @@ jobs:
             id: ${{ steps.get_release_note_id.outputs.release_note_id }}
 
   release_frontend_with_backend:
-    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
+    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v') && ${{ github.actor }} !== 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ github.actor }}
       - name: Checkout Repo Action
         uses: actions/checkout@v2
       - uses: octokit/request-action@v2.x
