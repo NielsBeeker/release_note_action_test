@@ -30,7 +30,7 @@ jobs:
         with:
             id: ${{ steps.get_release_note_id.outputs.release_note_id }}
 
-  release_frontend_with backend:
+  release_frontend_with_backend:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'backend_v')
     runs-on: ubuntu-latest
     steps:
