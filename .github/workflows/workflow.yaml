@@ -6,7 +6,7 @@ on:
 
 jobs:
   release_backend_with_frontend:
-    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v') &&
+    if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
     steps:
       - run: echo ${{ github.actor }}
