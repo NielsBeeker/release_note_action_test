@@ -9,7 +9,7 @@ jobs:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.workflow }}
+      - run: echo ${{ github.ref }}
       - run: echo ${{ github.triggering_actor }}
       - run: echo ${{ github.event_name }}
       - name: Checkout Repo Action
