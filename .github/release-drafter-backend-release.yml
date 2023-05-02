@@ -7,7 +7,7 @@ commitish: backend-release
 categories:
   - title: Backend New Features 🛠
     label: 'backend'
-  - title: ${{ vars.COMMON_LIBRARY_TITLE }}
+  - title: Common library changes 🎊
     labels:
       - 'common-library'
       - 'doc'
