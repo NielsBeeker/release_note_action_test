@@ -9,9 +9,6 @@ jobs:
     if: contains(github.event.release.body, 'Common library changes 🎊') && contains(github.ref, 'frontend_v')
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.ref }}
-      - run: echo ${{ github.triggering_actor }}
-      - run: echo ${{ github.event_name }}
       - name: Checkout Repo Action
         uses: actions/checkout@v2
       - uses: octokit/request-action@v2.x
@@ -27,6 +24,7 @@ jobs:
         run: |
           echo "release_note_id=$(echo $release_notes | jq '.[] | select((.tag_name | startswith("backend_v")) and (.draft==true)).id')" >> $GITHUB_OUTPUT
       - name: Publish release
+        if: ${{ steps.get_release_note_id.outputs.release_note_id }} !== ""
         uses: StuYarrow/publish-release@v1.1.2
         env:
             GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
