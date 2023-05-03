@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "release_note_id=$(echo $release_notes | jq '.[] | select((.tag_name | startswith("backend_v")) and (.draft==true)).id')" >> $GITHUB_OUTPUT
       - name: Publish release
+        if: ${{ steps.get_release_note_id.outputs.release_note_id }} !== ""
         uses: StuYarrow/publish-release@v1.1.2
         env:
             GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
@@ -55,6 +56,7 @@ jobs:
         run: |
           echo "release_note_id=$(echo $release_notes | jq '.[] | select((.tag_name | startswith("frontend_v")) and (.draft==true)).id')" >> $GITHUB_OUTPUT
       - name: Publish release
+        if: ${{ steps.get_release_note_id.outputs.release_note_id }} !== ""
         uses: StuYarrow/publish-release@v1.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
