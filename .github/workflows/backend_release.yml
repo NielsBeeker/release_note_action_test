@@ -11,5 +11,5 @@ jobs:
       - name: CircleCI ephemeral backend deployment
         id: ephemeral_backend_created
         env:
-          VARIABLE: '${{ github.event.pull_request.labels }}'
+          VARIABLE: ${{ toJson(github.event.pull_request.labels) }}
         run: echo $VARIABLE
