@@ -8,8 +8,11 @@ jobs:
   trigger-ephemeral-environment:
     runs-on: ubuntu-latest
     steps:
-      - name: CircleCI ephemeral backend deployment
-        id: ephemeral_backend_created
-        env:
-          VARIABLE: ${{ toJson(github.event.pull_request.labels) }}
-        run: echo $VARIABLE
+      - name: Get Labels
+        id: get_labels
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/labels
+
+      - name: Store Labels in Variable
+        run: echo "LABELS=${{ steps.get_labels.outputs.data }}" >> $GITHUB_ENV
