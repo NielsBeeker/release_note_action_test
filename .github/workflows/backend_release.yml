@@ -12,4 +12,4 @@ jobs:
         id: ephemeral_backend_created
         env:
           VARIABLE: '${{ github.event.pull_request.labels.no-infra }} ${{ github.event.pull_request.labels }}'
-        run: echo ${{ github.event.pull_request.labels.* }}
+        run: echo ${{ toJson(github.event.pull_request.labels.*) }}
