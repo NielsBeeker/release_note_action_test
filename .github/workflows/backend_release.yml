@@ -1,12 +1,17 @@
-name: backend_release_published_deploy_live_environment
+name: pr_create_ephemeral_environment
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    types: [opened, synchronize, labeled]
 
-jobs:
-  trigger-live-backend-deploy:
-    if: contains(github.ref, 'backend_v')
+  trigger-ephemeral-backend:
+    if: contains(github.event.pull_request.labels.*.name, 'backend')
     runs-on: ubuntu-latest
     steps:
-      - run: echo "lala"
+      - name: Bypass backend deployment
+        if: contains(github.event.pull_request.labels.*.name, 'no-infra') || !contains(github.event.pull_request.labels.*.name, 'backend')
+        run: exit 1
+      - name: CircleCI ephemeral backend deployment
+        if: !contains(github.event.pull_request.labels.*.name, 'no-infra')
+        id: ephemeral_backend_created
+        run: echo "Deployed"
