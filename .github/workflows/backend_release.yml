@@ -4,6 +4,7 @@ on:
   pull_request:
     types: [opened, synchronize, labeled]
 
+jobs:
   trigger-ephemeral-environment:
     runs-on: ubuntu-latest
     steps:
