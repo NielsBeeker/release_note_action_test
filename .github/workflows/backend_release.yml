@@ -8,21 +8,8 @@ jobs:
   trigger-ephemeral-environment:
     runs-on: ubuntu-latest
     steps:
-      - name: check labels
-        if: contains(github.event.pull_request.labels.*.name, 'frontend') && (!contains(github.event.pull_request.labels.*.name, 'portal-immonet') && !contains(github.event.pull_request.labels.*.name, 'portal-immowelt'))
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('Current label(s) don't allow you to validate this workflow')
       - name: CircleCI ephemeral backend deployment
-        if: contains(github.event.pull_request.labels.*.name, 'backend')
         id: ephemeral_backend_created
-        run: echo "Deployed backend"
-      - name: CircleCI ephemeral immonet deployment
-        if: contains(github.event.pull_request.labels.*.name, 'immonet')
-        id: ephemeral_immoweb_created
-        run: echo "Deployed Immoweb"
-      - name: CircleCI ephemeral immowelt deployment
-        if: contains(github.event.pull_request.labels.*.name, 'frontend')
-        id: ephemeral_immowelt_created
-        run: echo "Deployed Immowelt"
+        env:
+          VARIABLE: {{ toJson(github.event.pull_request.labels) }}
+        run: echo $VARIABLE
