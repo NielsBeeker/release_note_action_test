@@ -26,4 +26,4 @@ jobs:
           echo foodididididi > bar.txt
           git add .
           git commit -S -m "This commit is signed!"
-          git push
+          git push origin test_verified
