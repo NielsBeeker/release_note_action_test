@@ -21,6 +21,7 @@ jobs:
       -
         name: Sign commit and push changes
         run: |
+          export GPG_TTY=$(tty)
           git checkout -b test_verified
           echo foodididididi > bar.txt
           git add .
