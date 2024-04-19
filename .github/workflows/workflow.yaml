@@ -22,6 +22,7 @@ jobs:
       -
         name: Sign commit and push changes
         run: |
+          git checkout -b test_verified
           echo foo > bar.txt
           git add .
           git commit -S -m "This commit is signed!"
