@@ -24,6 +24,8 @@ jobs:
           git config --global user.name "Github Bot"
           git config --global user.email "aviv-owner-tmpenvironments@aviv-group.com"
           git checkout -b test_verified
+      - name: add push
+        run: |
           echo foodididididi > bar.txt
           git add .
           git commit -S -m "This commit is signed!"
