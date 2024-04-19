@@ -22,6 +22,8 @@ jobs:
       -
         name: Sign commit and push changes
         run: |
+          git config --global user.name "Github Bot"
+          git config --global user.email "aviv-owner-tmpenvironments@aviv-group.com"
           git checkout -b test_verified
           echo foodididididi > bar.txt
           git add .
