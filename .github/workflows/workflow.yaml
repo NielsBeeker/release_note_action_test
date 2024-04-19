@@ -28,4 +28,4 @@ jobs:
         run: |
           echo foodididididi > bar.txt
           git add .
-          git commit -S -m "This commit is signed!"
+          git commit -m "This commit is signed!"
