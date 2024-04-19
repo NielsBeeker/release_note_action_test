@@ -28,7 +28,7 @@ jobs:
           git checkout -b test_verified
           echo foodididididi > bar.txt
           git add .
-          git commit -m "This commit is signed!"
+          git commit -S -m "This commit is signed!"
           git push origin test_verified
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
