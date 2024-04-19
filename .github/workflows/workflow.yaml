@@ -15,7 +15,7 @@ jobs:
           persist-credentials: false # This is important if you have branch protection rules!
       - name: Import bot's GPG key for signing commits
         id: import-gpg
-        uses: crazy-max/ghaction-import-gpg@v6.1
+        uses: crazy-max/ghaction-import-gpg@v6.1.0
         with:
           gpg_private_key: ${{ secrets.BOT_GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.BOT_GPG_PASSPHRASE }}
