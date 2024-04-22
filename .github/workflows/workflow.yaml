@@ -28,7 +28,7 @@ jobs:
           echo 'adding a new commit now' >> README.md
       - name: Commit changes to README.md file
         run: |
-          git pull
+          git pull origin test_verified
           git commit -m "this is bot" README.md
           git push origin test_verified
         env:
