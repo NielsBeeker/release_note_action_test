@@ -21,10 +21,10 @@ jobs:
       -
         name: Sign commit and push changes
         run: |
-          export GPG_TTY=$(tty)
           git checkout -b test_verified
       - name: add push
         run: |
+          export GPG_TTY=$(tty)
           echo foodididididi > bar.txt
           git add .
           git commit -m "This commit is signed!"
