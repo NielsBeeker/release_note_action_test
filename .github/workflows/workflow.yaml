@@ -27,12 +27,13 @@ jobs:
           git checkout -b test_verified
           echo 'adding a new commit now' >> README.md
       - name: Commit changes to README.md file
-        run: git commit -m "this is bot" README.md
+        run: |
+          git commit -m "this is bot" README.md
+          git push origin test_verified
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_AUTHOR_EMAIL: ${{ steps.import-gpg.outputs.email }}
           GIT_COMMITTER_NAME: ${{ steps.import-gpg.outputs.name }}
           GIT_COMMITTER_EMAIL: ${{ steps.import-gpg.outputs.email }}
-      - name: push
-        run: git push origin test_verified
+
