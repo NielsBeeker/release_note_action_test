@@ -25,7 +25,7 @@ jobs:
           git_commit_gpgsign: true
       - name: Change some files
         run: |
-          git checkout -b test_verified
+          git checkout -b origin/test_verified
           echo 'adding a new commit now' >> README.md
           git commit -m "this is bot" README.md
           git push origin test_verified
