@@ -14,6 +14,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          ref: test_verified
       - name: Import bot's GPG key for signing commits
         id: import-gpg
         uses: crazy-max/ghaction-import-gpg@v4
@@ -25,7 +26,6 @@ jobs:
           git_commit_gpgsign: true
       - name: Change some files
         run: |
-          git checkout -b test_verified origin/test_verified
           echo 'adding a new commit now' >> README.md
           git commit -m "this is bot" README.md
           git push origin test_verified
