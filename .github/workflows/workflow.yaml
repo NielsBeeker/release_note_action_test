@@ -12,9 +12,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.BOT_GITHUB_TOKEN1 }}
-          ref: test_verified
+#        with:
+#          token: ${{ secrets.BOT_GITHUB_TOKEN1 }}
+#          ref: test_verified
       - name: Import bot's GPG key for signing commits
         id: import-gpg
         uses: crazy-max/ghaction-import-gpg@v4
