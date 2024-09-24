@@ -17,7 +17,7 @@ jobs:
       - name: Get PR number
         id: get_pr_number
         run: |
-          BRANCH_NAME="${{ github.event.ref#refs/heads/ }}"
+          BRANCH_NAME="${{ github.event.ref }}"
           PR_NUMBER=$(gh pr list --head "$BRANCH_NAME" --json number --jq '.[0].number')
           echo $PR_NUMBER
           echo "::set-output name=pr_number::$PR_NUMBER"
