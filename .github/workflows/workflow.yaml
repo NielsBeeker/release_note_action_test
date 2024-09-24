@@ -22,6 +22,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=$(gh pr list --state open --head $GITHUB_REPOSITORY:${{ github.event.ref }} --json number --jq '.[0].number')
+          echo $PR_NUMBER
           echo "{pr_number}={$PR_NUMBER}" >> $GITHUB_OUTPUT
 
       - name: CircleCI Trigger on delete branches and tags
