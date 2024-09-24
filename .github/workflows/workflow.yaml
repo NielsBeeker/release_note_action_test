@@ -2,7 +2,7 @@ name: Destroy ephemeral
 
 on:
   delete:
-    branches: # we focus on the branches deletion in order to not handle deleted tags
+    branches: # we focus on the branches deletion in order to not handle deleted tags hiohi
       - "**"
 
 jobs:
