@@ -20,6 +20,9 @@ jobs:
         id: get_pr_number
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        run: |
+          PR_NUMBER=$(gh pr list --state open --head $GITHUB_REPOSITORY:${{ github.event.ref }} --json number --jq '.[0].number')
+          echo "{pr_number}={$PR_NUMBER}" >> $GITHUB_OUTPUT
+
       - name: CircleCI Trigger on delete branches and tags
-        run: echo ${{ steps.pr.outputs.get_pr_number }}
+        run: echo ${{ steps.get_pr_number.outputs.pr_number }}
