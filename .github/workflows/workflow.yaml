@@ -1,7 +1,9 @@
 name: Destroy ephemeral
 
 on:
-  delete
+  delete:
+    branches-ignore:
+      - main
 
 jobs:
   trigger-circleci:
@@ -20,8 +22,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=$(gh pr list --state closed --head ${{ github.event.ref }} --json number --jq '.[0].number')
-          echo $PR_NUMBER
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_ENV
       - name: CircleCI Trigger on delete branches and tags
-        run: echo ${{ steps.get_pr_number.outputs.pr_number }}
+        if: env.PR_NUMBER != ''
+        run: echo ${{ env.PR_NUMBER }}
